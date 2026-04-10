@@ -98,9 +98,9 @@ func (c *Client) Connect() error {
 		// 发送服务启动通知
 		title := "🔔 推送服务通知"
 		content := fmt.Sprintf("🚗 %s 通知推送服务已开启 ✅", c.carName)
-		if c.cfg.APIToken != "" {
+		if c.cfg.APIToken != "" || c.cfg.BarkKey != "" {
 			go func() {
-				if err := notifier.SendNotification(c.cfg.APIToken, title, content); err != nil {
+				if err := notifier.SendAll(c.cfg, title, content); err != nil {
 					log.Printf("❌ 服务启动通知推送失败: %v", err)
 				} else {
 					log.Printf("✅ 服务启动通知已推送")
@@ -290,7 +290,7 @@ func (c *Client) processChargeStart() {
 	title := fmt.Sprintf("🚗 %s 充电开始 🔌", c.carName)
 
 	go func() {
-		if err := notifier.SendNotification(c.cfg.APIToken, title, content); err != nil {
+		if err := notifier.SendAll(c.cfg, title, content); err != nil {
 			log.Printf("❌ 充电开始推送失败: %v", err)
 		} else {
 			log.Println("✅ 充电开始通知已推送")
@@ -356,7 +356,7 @@ func (c *Client) doChargeNotification(charge *models.Charge) {
 	title := fmt.Sprintf("🚗 %s 充电%s 🔋", c.carName, getChargeState(c.lastChargingState))
 
 	go func() {
-		if err := notifier.SendNotification(c.cfg.APIToken, title, content); err != nil {
+		if err := notifier.SendAll(c.cfg, title, content); err != nil {
 			log.Printf("❌ 充电通知推送失败: %v", err)
 		} else {
 			log.Printf("✅ 充电通知已推送 (ID: %d)", charge.ID)
@@ -467,7 +467,7 @@ func (c *Client) doTripNotification(result *db.DriveWithSOC) {
 	title := fmt.Sprintf("🚗 %s 行程通知 📍", c.carName)
 
 	go func() {
-		if err := notifier.SendNotification(c.cfg.APIToken, title, content); err != nil {
+		if err := notifier.SendAll(c.cfg, title, content); err != nil {
 			log.Printf("❌ 行程通知推送失败: %v", err)
 		} else {
 			log.Printf("✅ 行程通知已推送 (ID: %d)", drive.ID)

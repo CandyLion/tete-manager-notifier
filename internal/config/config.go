@@ -1,58 +1,82 @@
 package config
 
 import (
-	"os"
-	"strconv"
+"os"
+"strconv"
 
-	"github.com/joho/godotenv"
+"github.com/joho/godotenv"
 )
 
 type Config struct {
-	APIToken        string
-	DBHost          string
-	DBUser          string
-	DBPass          string
-	DBName          string
-	DBPort          int
-	MQTTHost        string
-	MQTTPort        int
-	MQTTUser        string
-	MQTTPass        string
-	CarID           int
-	LogLevel        string
-	PushDebounceSec int // 推送防抖初始时间，后续会进行3次指数退避重试，按(次数-1)倍增加
+APIToken string
+
+BarkServer string
+BarkKey    string
+BarkGroup  string
+BarkSound  string
+BarkURL    string
+BarkIcon   string
+BarkLevel  string
+
+DBHost string
+DBUser string
+DBPass string
+DBName string
+DBPort int
+
+MQTTHost string
+MQTTPort int
+MQTTUser string
+MQTTPass string
+
+CarID int
+
+LogLevel        string
+PushDebounceSec int // 推送防抖初始时间，后续会进行3次指数退避重试，按(次数-1)倍增加
 }
 
 func Load() *Config {
-	_ = godotenv.Load()
+_ = godotenv.Load()
 
-	return &Config{
-		APIToken:        os.Getenv("API_TOKEN"),
-		DBHost:          getEnv("DATABASE_HOST", "database"),
-		DBUser:          getEnv("DATABASE_USER", "teslamate"),
-		DBPass:          os.Getenv("DATABASE_PASS"),
-		DBName:          getEnv("DATABASE_NAME", "teslamate"),
-		DBPort:          mustInt(os.Getenv("DATABASE_PORT"), 5432),
-		MQTTHost:        getEnv("MQTT_HOST", "mosquitto"),
-		MQTTPort:        mustInt(os.Getenv("MQTT_PORT"), 1883),
-		MQTTUser:        os.Getenv("MQTT_USER"),
-		MQTTPass:        os.Getenv("MQTT_PASS"),
-		CarID:           mustInt(os.Getenv("CAR_ID"), 1),
-		LogLevel:        getEnv("LOG_LEVEL", "info"),
-		PushDebounceSec: mustInt(os.Getenv("PUSH_DEBOUNCE_SECONDS"), 5),
-	}
+return &Config{
+APIToken: os.Getenv("API_TOKEN"),
+
+BarkServer: getEnv("BARK_SERVER", "https://api.day.app"),
+BarkKey:    os.Getenv("BARK_KEY"),
+BarkGroup:  os.Getenv("BARK_GROUP"),
+BarkSound:  os.Getenv("BARK_SOUND"),
+BarkURL:    os.Getenv("BARK_URL"),
+BarkIcon:   os.Getenv("BARK_ICON"),
+BarkLevel:  os.Getenv("BARK_LEVEL"),
+
+DBHost: getEnv("DATABASE_HOST", "database"),
+DBUser: getEnv("DATABASE_USER", "teslamate"),
+DBPass: os.Getenv("DATABASE_PASS"),
+DBName: getEnv("DATABASE_NAME", "teslamate"),
+DBPort: mustInt(os.Getenv("DATABASE_PORT"), 5432),
+
+MQTTHost: getEnv("MQTT_HOST", "mosquitto"),
+MQTTPort: mustInt(os.Getenv("MQTT_PORT"), 1883),
+MQTTUser: os.Getenv("MQTT_USER"),
+MQTTPass: os.Getenv("MQTT_PASS"),
+
+CarID: mustInt(os.Getenv("CAR_ID"), 1),
+
+LogLevel:        getEnv("LOG_LEVEL", "info"),
+PushDebounceSec: mustInt(os.Getenv("PUSH_DEBOUNCE_SECONDS"), 5),
+}
 }
 
 func mustInt(s string, def int) int {
-	if v, err := strconv.Atoi(s); err == nil {
-		return v
-	}
-	return def
+if v, err := strconv.Atoi(s); err == nil {
+return v
+}
+return def
 }
 
 func getEnv(key, def string) string {
-	if v := os.Getenv(key); v != "" {
-		return v
-	}
-	return def
+if v := os.Getenv(key); v != "" {
+return v
+}
+return def
 }

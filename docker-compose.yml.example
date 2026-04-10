@@ -1,16 +1,29 @@
 services:
   tete-notifier-1:
-    image: wenryon/tete-notifier:latest
+    build: .
+    image: candylion/tete-notifier:bark
     restart: always
     environment:
-      - API_TOKEN= #输入特特管家的完整推送API URL
+      - API_TOKEN=
+      - BARK_SERVER=https://api.day.app
+      - BARK_KEY=
+      - BARK_GROUP=TeslaMate
+      - BARK_SOUND=
+      - BARK_URL=
+      - BARK_ICON=
+      - BARK_LEVEL=
       - DATABASE_HOST=database
       - DATABASE_USER=teslamate
-      - DATABASE_PASS= #输入数据库的用户密码
+      - DATABASE_PASS=
       - DATABASE_NAME=teslamate
+      - DATABASE_PORT=5432
       - MQTT_HOST=mosquitto
-      - CAR_ID=1 #车辆ID，默认为1
-      - PUSH_DEBOUNCE_SECONDS=5 #推送防抖动初始时间（秒）
+      - MQTT_PORT=1883
+      - MQTT_USER=
+      - MQTT_PASS=
+      - CAR_ID=1
+      - LOG_LEVEL=info
+      - PUSH_DEBOUNCE_SECONDS=5
     depends_on:
       - database
       - mosquitto
