@@ -1,0 +1,10 @@
+services:
+  tete-notifier-1:
+    build: .
+    image: tete-notifier:bark-local
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - database
+      - mosquitto
