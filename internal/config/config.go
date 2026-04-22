@@ -93,7 +93,7 @@ func Load() *Config {
 		DetailMapProviders:       parseProviders(getEnv("DETAIL_MAP_ENABLED_PROVIDERS", "osm,amap")),
 
 		OSMTileURL:        getEnv("OSM_TILE_URL", getEnv("MAP_TILE_URL", "https://tile.openstreetmap.org/{z}/{x}/{y}.png")),
-		OSMTileUserAgent:  getEnv("OSM_TILE_USER_AGENT", getEnv("MAP_TILE_USER_AGENT", "tete-manager-notifier/1.0 (+https://github.com/wen-ryon/tete-manager-notifier)")),
+		OSMTileUserAgent:  getEnv("OSM_TILE_USER_AGENT", getEnv("MAP_TILE_USER_AGENT", "tmbark-notifier/1.0 (+https://github.com/CandyLion/tmbark-notifier)")),
 		OSMTileCacheHours: mustInt(getEnv("OSM_TILE_CACHE_HOURS", getEnv("MAP_TILE_CACHE_HOURS", "168")), 168),
 
 		AMapStaticMapURL:   getEnv("AMAP_STATIC_MAP_URL", "https://restapi.amap.com/v3/staticmap"),

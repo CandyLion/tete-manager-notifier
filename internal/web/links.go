@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/wen-ryon/tete-manager-notifier/internal/config"
+	"github.com/CandyLion/tmbark-notifier/internal/config"
 )
 
 func BuildDriveDetailURL(cfg *config.Config, driveID uint) string {

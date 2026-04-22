@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/wen-ryon/tete-manager-notifier/internal/config"
+	"github.com/CandyLion/tmbark-notifier/internal/config"
 )
 
 const (

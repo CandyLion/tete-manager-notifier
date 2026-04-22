@@ -18,8 +18,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/wen-ryon/tete-manager-notifier/internal/config"
-	"github.com/wen-ryon/tete-manager-notifier/internal/models"
+	"github.com/CandyLion/tmbark-notifier/internal/config"
+	"github.com/CandyLion/tmbark-notifier/internal/models"
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/basicfont"
 	"golang.org/x/image/math/fixed"
@@ -28,7 +28,7 @@ import (
 const (
 	staticMapTileSize    = 256
 	staticMapMaxZoom     = 18
-	staticMapCacheDir    = "tete-manager-notifier-map-cache"
+	staticMapCacheDir    = "tmbark-notifier-map-cache"
 	staticMapTileTimeout = 12 * time.Second
 )
 

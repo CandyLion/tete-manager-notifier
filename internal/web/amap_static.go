@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/wen-ryon/tete-manager-notifier/internal/config"
-	"github.com/wen-ryon/tete-manager-notifier/internal/models"
+	"github.com/CandyLion/tmbark-notifier/internal/config"
+	"github.com/CandyLion/tmbark-notifier/internal/models"
 )
 
 const (
@@ -103,5 +103,5 @@ func aMapUserAgent(cfg *config.Config) string {
 	if ua := strings.TrimSpace(cfg.OSMTileUserAgent); ua != "" {
 		return ua
 	}
-	return "tete-manager-notifier/1.0"
+	return "tmbark-notifier/1.0"
 }

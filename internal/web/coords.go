@@ -3,7 +3,7 @@ package web
 import (
 	"math"
 
-	"github.com/wen-ryon/tete-manager-notifier/internal/models"
+	"github.com/CandyLion/tmbark-notifier/internal/models"
 )
 
 const (

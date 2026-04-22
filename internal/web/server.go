@@ -13,9 +13,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/wen-ryon/tete-manager-notifier/internal/config"
-	"github.com/wen-ryon/tete-manager-notifier/internal/db"
-	"github.com/wen-ryon/tete-manager-notifier/internal/models"
+	"github.com/CandyLion/tmbark-notifier/internal/config"
+	"github.com/CandyLion/tmbark-notifier/internal/db"
+	"github.com/CandyLion/tmbark-notifier/internal/models"
 
 	"gorm.io/gorm"
 )

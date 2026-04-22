@@ -7,8 +7,8 @@ import (
 	"image/png"
 	"math"
 
-	"github.com/wen-ryon/tete-manager-notifier/internal/config"
-	"github.com/wen-ryon/tete-manager-notifier/internal/models"
+	"github.com/CandyLion/tmbark-notifier/internal/config"
+	"github.com/CandyLion/tmbark-notifier/internal/models"
 )
 
 const (

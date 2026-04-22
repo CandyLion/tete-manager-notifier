@@ -71,7 +71,7 @@
    | DETAIL_MAP_DEFAULT_PROVIDER | 详情页默认 provider，可选 `osm` / `amap` | 否 | `osm` |
    | DETAIL_MAP_ENABLED_PROVIDERS | 详情页顶部允许切换的 provider 列表 | 否 | `osm,amap` |
    | OSM_TILE_URL | OSM 底图模板地址 | 否 | `https://tile.openstreetmap.org/{z}/{x}/{y}.png` |
-| OSM_TILE_USER_AGENT | 服务端请求 OSM 底图时使用的 User-Agent | 否 | `tmbark-notifier/1.0 (+https://github.com/CandyLion/tete-manager-notifier)` |
+| OSM_TILE_USER_AGENT | 服务端请求 OSM 底图时使用的 User-Agent | 否 | `tmbark-notifier/1.0 (+https://github.com/CandyLion/tmbark-notifier)` |
    | OSM_TILE_CACHE_HOURS | OSM 瓦片本地缓存小时数 | 否 | 168 |
    | AMAP_STATIC_MAP_URL | 高德静态地图接口地址 | 否 | `https://restapi.amap.com/v3/staticmap` |
    | AMAP_WEB_SERVICE_KEY | 高德 Web服务 API Key，用于 Bark 高德静态图 | Bark 选 `amap` 时必填 | - |
@@ -124,7 +124,7 @@ docker buildx build \
   -t <dockerhub-user>/tmbark-notifier:v1.1.0 \
   -t <dockerhub-user>/tmbark-notifier:latest \
   --push \
-  https://github.com/CandyLion/tete-manager-notifier.git#v1.1.0
+  https://github.com/CandyLion/tmbark-notifier.git#v1.1.0
 ```
 
 说明：
@@ -163,7 +163,7 @@ docker buildx build \
 
 ```bash
 # 克隆项目
-git clone https://github.com/CandyLion/tete-manager-notifier.git
+git clone https://github.com/CandyLion/tmbark-notifier.git
 
 # 配置本机联调环境变量
 cp .env.example .env

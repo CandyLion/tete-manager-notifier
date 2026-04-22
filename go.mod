@@ -1,4 +1,4 @@
-module github.com/wen-ryon/tete-manager-notifier
+module github.com/CandyLion/tmbark-notifier
 
 go 1.25.0
 
