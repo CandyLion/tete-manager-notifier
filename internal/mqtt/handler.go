@@ -13,6 +13,7 @@ import (
 	"github.com/wen-ryon/tete-manager-notifier/internal/db"
 	"github.com/wen-ryon/tete-manager-notifier/internal/models"
 	"github.com/wen-ryon/tete-manager-notifier/internal/notifier"
+	appweb "github.com/wen-ryon/tete-manager-notifier/internal/web"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
@@ -422,7 +423,7 @@ func (c *Client) processTripEnd() {
 
 // 指数退避
 func (c *Client) tryWithBackoff(retryCount *int, maxRetries int, baseDelaySec int, action func() bool, logPrefix string) {
-	*retryCount++
+	*retryCount = *retryCount + 1
 	if *retryCount > maxRetries {
 		log.Printf("⏹️ %s 重试超过 %d 次，放弃", logPrefix, maxRetries)
 		*retryCount = 0
@@ -465,9 +466,14 @@ func (c *Client) doTripNotification(result *db.DriveWithSOC) {
 	)
 
 	title := fmt.Sprintf("🚗 %s 行程通知 📍", c.carName)
+	opts := notifier.Options{}
+	if c.cfg.PublicBaseURL != "" {
+		opts.ClickURL = appweb.BuildDriveDetailURLForProvider(c.cfg, drive.ID, c.cfg.DetailMapDefaultProvider)
+		opts.ImageURL = appweb.BuildDriveTrackImageURLForProvider(c.cfg, drive.ID, c.cfg.BarkMapProvider)
+	}
 
 	go func() {
-		if err := notifier.SendAll(c.cfg, title, content); err != nil {
+		if err := notifier.SendAll(c.cfg, title, content, opts); err != nil {
 			log.Printf("❌ 行程通知推送失败: %v", err)
 		} else {
 			log.Printf("✅ 行程通知已推送 (ID: %d)", drive.ID)

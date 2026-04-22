@@ -66,6 +66,14 @@ type DriveWithSOC struct {
 	EndSOC   float64 `gorm:"column:end_soc"`
 }
 
+type DriveDetail struct {
+	DriveWithSOC
+	StartLatitude  float64 `gorm:"column:start_latitude"`
+	StartLongitude float64 `gorm:"column:start_longitude"`
+	EndLatitude    float64 `gorm:"column:end_latitude"`
+	EndLongitude   float64 `gorm:"column:end_longitude"`
+}
+
 func GetLatestDrive(carID int) (*DriveWithSOC, error) {
 	var result DriveWithSOC
 
@@ -80,6 +88,54 @@ func GetLatestDrive(carID int) (*DriveWithSOC, error) {
 		First(&result).Error
 
 	return &result, err
+}
+
+func GetDriveDetail(carID int, driveID uint) (*DriveDetail, error) {
+	var result DriveDetail
+
+	err := DB.Table("drives d").
+		Select(`d.*,
+				COALESCE(start_pos.usable_battery_level, start_pos.battery_level, 0) as start_soc,
+				COALESCE(end_pos.usable_battery_level, end_pos.battery_level, 0) as end_soc,
+				COALESCE(start_pos.latitude, 0) as start_latitude,
+				COALESCE(start_pos.longitude, 0) as start_longitude,
+				COALESCE(end_pos.latitude, 0) as end_latitude,
+				COALESCE(end_pos.longitude, 0) as end_longitude`).
+		Joins("LEFT JOIN positions start_pos ON d.start_position_id = start_pos.id").
+		Joins("LEFT JOIN positions end_pos ON d.end_position_id = end_pos.id").
+		Where("d.car_id = ? AND d.id = ?", carID, driveID).
+		First(&result).Error
+
+	return &result, err
+}
+
+func GetDrivePositions(carID int, driveID uint, startDate, endDate time.Time) ([]models.Position, error) {
+	var positions []models.Position
+
+	err := DB.
+		Where("car_id = ? AND drive_id = ?", carID, driveID).
+		Order("date asc").
+		Find(&positions).Error
+	if err != nil {
+		return nil, err
+	}
+
+	if len(positions) > 0 {
+		return positions, nil
+	}
+
+	return GetDrivePositionsByTime(carID, startDate, endDate)
+}
+
+func GetDrivePositionsByTime(carID int, startDate, endDate time.Time) ([]models.Position, error) {
+	var positions []models.Position
+
+	err := DB.
+		Where("car_id = ? AND date BETWEEN ? AND ?", carID, startDate, endDate).
+		Order("date asc").
+		Find(&positions).Error
+
+	return positions, err
 }
 
 // GetLatestCharge 联表查询 charges 表获取快充判断字段

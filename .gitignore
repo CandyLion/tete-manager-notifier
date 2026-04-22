@@ -8,6 +8,7 @@
 *.so
 *.dylib
 bin/
+dist/
 
 # Test binary, built with `go test -c`
 *.test
@@ -27,10 +28,12 @@ go.work.sum
 
 # env file
 .env
+.env.docker
 
 # Editor/IDE
 .idea/
 .vscode/
+images/
 
 # macOS
 .DS_Store

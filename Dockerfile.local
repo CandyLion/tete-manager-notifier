@@ -1,0 +1,10 @@
+# syntax=docker/dockerfile:1.7
+
+FROM alpine:latest
+ARG TARGETARCH
+RUN apk --no-cache add ca-certificates tzdata
+ENV TZ=Asia/Shanghai
+WORKDIR /root/
+COPY dist/tmbark-notifier-linux-${TARGETARCH} ./tmbark-notifier
+RUN chmod +x ./tmbark-notifier
+CMD ["./tmbark-notifier"]
